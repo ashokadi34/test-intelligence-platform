@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Intelligence Platform</title>
+</head>
+<body>
+
+<h1>Test Intelligence Platform</h1>
+
+<h2>Dashboard Summary</h2>
+
+<div id="dashboard"></div>
+
+<script>
+
+fetch('/api/executions/summary')
+    .then(response => response.json())
+    .then(data => {
+
+        document.getElementById('dashboard').innerHTML = `
+            <p>Total Executions: ${data.totalExecutions}</p>
+            <p>Total Passed: ${data.totalPassed}</p>
+            <p>Total Failed: ${data.totalFailed}</p>
+            <p>Total Skipped: ${data.totalSkipped}</p>
+            <p>Pass Percentage: ${data.passPercentage}%</p>
+        `;
+    });
+
+</script>
+
+</body>
+</html>
