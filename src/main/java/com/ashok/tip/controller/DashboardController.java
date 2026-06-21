@@ -3,6 +3,7 @@ package com.ashok.tip.controller;
 import com.ashok.tip.model.TestExecution;
 import com.ashok.tip.service.DashboardService;
 import org.springframework.web.bind.annotation.*;
+import com.ashok.tip.dto.DashboardSummaryDTO;
 
 import java.util.List;
 
@@ -24,5 +25,9 @@ public class DashboardController {
     @GetMapping
     public List<TestExecution> getExecutions() {
         return dashboardService.getAllExecutions();
+    }
+    @GetMapping("/summary")
+    public DashboardSummaryDTO getSummary() {
+        return dashboardService.getSummary();
     }
 }

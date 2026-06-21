@@ -31,4 +31,16 @@ public class TestExecution {
     private Integer durationSeconds;
 
     private LocalDateTime executionTime;
+    
+    public Integer getPassedTests() {
+        return passedTests;
+    }
+
+    public Integer getFailedTests() {
+        return failedTests;
+    }
+
+    public Integer getSkippedTests() {
+        return skippedTests;
+    }
 }
