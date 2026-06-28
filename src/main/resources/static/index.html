@@ -1,32 +1,267 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>Test Intelligence Platform</title>
+
+<meta charset="UTF-8">
+
+<title>Test Intelligence Platform</title>
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
+
 <body>
 
-<h1>Test Intelligence Platform</h1>
+<div class="header">
+    <h1>Test Intelligence Platform</h1>
+</div>
 
-<h2>Dashboard Summary</h2>
+<div class="container">
 
-<div id="dashboard"></div>
+    <!-- Summary Cards -->
+
+    <div class="cards">
+
+        <div class="card">
+            <h2>Total Executions</h2>
+            <p id="executions"></p>
+        </div>
+
+        <div class="card">
+            <h2>Passed</h2>
+            <p id="passed"></p>
+        </div>
+
+        <div class="card">
+            <h2>Failed</h2>
+            <p id="failed"></p>
+        </div>
+
+        <div class="card">
+            <h2>Skipped</h2>
+            <p id="skipped"></p>
+        </div>
+
+        <div class="card">
+            <h2>Pass %</h2>
+            <p id="percentage"></p>
+        </div>
+
+    </div>
+
+    <!-- Charts -->
+
+    <div class="charts">
+
+        <div class="chart-card pie-card">
+            <h3>Execution Result Distribution</h3>
+            <canvas id="pieChart"></canvas>
+        </div>
+
+        <div class="chart-card bar-card">
+            <h3>Execution Trend</h3>
+            <canvas id="barChart"></canvas>
+        </div>
+
+    </div>
+
+    <!-- Table -->
+
+    <h2 class="table-title">Execution History</h2>
+
+    <table>
+
+        <thead>
+
+        <tr>
+
+            <th>Execution</th>
+            <th>Total</th>
+            <th>Passed</th>
+            <th>Failed</th>
+            <th>Skipped</th>
+            <th>Duration</th>
+
+        </tr>
+
+        </thead>
+
+        <tbody id="history">
+
+        </tbody>
+
+    </table>
+
+</div>
 
 <script>
 
-fetch('/api/executions/summary')
-    .then(response => response.json())
-    .then(data => {
+// Dashboard Summary
 
-        document.getElementById('dashboard').innerHTML = `
-            <p>Total Executions: ${data.totalExecutions}</p>
-            <p>Total Passed: ${data.totalPassed}</p>
-            <p>Total Failed: ${data.totalFailed}</p>
-            <p>Total Skipped: ${data.totalSkipped}</p>
-            <p>Pass Percentage: ${data.passPercentage}%</p>
-        `;
+fetch("/api/executions/summary")
+.then(res => res.json())
+.then(data => {
+
+    document.getElementById("executions").innerText = data.totalExecutions;
+
+    document.getElementById("passed").innerText = data.totalPassed;
+
+    document.getElementById("failed").innerText = data.totalFailed;
+
+    document.getElementById("skipped").innerText = data.totalSkipped;
+
+    document.getElementById("percentage").innerText =
+        data.passPercentage.toFixed(2) + " %";
+
+});
+
+// Pie Chart
+
+fetch("/api/executions/summary")
+.then(res => res.json())
+.then(data => {
+
+    new Chart(document.getElementById("pieChart"), {
+
+        type: "pie",
+
+        data: {
+
+            labels: ["Passed", "Failed", "Skipped"],
+
+            datasets: [{
+
+                data: [
+                    data.totalPassed,
+                    data.totalFailed,
+                    data.totalSkipped
+                ],
+
+                backgroundColor: [
+                    "#22c55e",
+                    "#ef4444",
+                    "#eab308"
+                ]
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+                legend: {
+
+                    position: "top"
+
+                }
+
+            }
+
+        }
+
     });
+
+});
+
+// Bar Chart
+
+fetch("/api/executions")
+.then(res => res.json())
+.then(data => {
+
+    const names = data.map(e => e.executionName);
+
+    const passed = data.map(e => e.passedTests);
+
+    new Chart(document.getElementById("barChart"), {
+
+        type: "bar",
+
+        data: {
+
+            labels: names,
+
+            datasets: [{
+
+                label: "Passed Tests",
+
+                data: passed,
+
+                backgroundColor: "#2563eb"
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+                legend: {
+
+                    display: false
+
+                }
+
+            }
+
+        }
+
+    });
+
+});
+
+// Table
+
+fetch("/api/executions")
+.then(res => res.json())
+.then(data => {
+
+    let rows = "";
+
+    data.forEach(item => {
+
+        rows += `
+
+        <tr>
+
+            <td>${item.executionName}</td>
+
+            <td>${item.totalTests}</td>
+
+            <td>${item.passedTests}</td>
+
+            <td>${item.failedTests}</td>
+
+            <td>${item.skippedTests}</td>
+
+            <td>${item.durationSeconds} sec</td>
+
+        </tr>
+
+        `;
+
+    });
+
+    document.getElementById("history").innerHTML = rows;
+
+});
 
 </script>
 
 </body>
+
 </html>

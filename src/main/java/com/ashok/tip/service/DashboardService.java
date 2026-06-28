@@ -52,8 +52,10 @@ public class DashboardService {
         double passPercentage = 0;
 
         if (totalTests > 0) {
-            passPercentage =
-                    ((double) totalPassed / totalTests) * 100;
+        	passPercentage =
+        	        Math.round(
+        	                ((double) totalPassed / totalTests) * 10000
+        	        ) / 100.0;
         }
 
         return new DashboardSummaryDTO(
