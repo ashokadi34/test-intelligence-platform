@@ -6,15 +6,29 @@ This project simulates how QA teams monitor automated test executions, analyze e
 
 ---
 
-# 📷 Dashboard Preview
+# 📷 Application Preview
 
-> Add screenshots here
+## Dashboard Overview
 
-```
-/screenshots/dashboard.png
-/screenshots/charts.png
-/screenshots/history.png
-```
+<p align="center">
+<img src="screenshots/dashboard.png" width="100%">
+</p>
+
+---
+
+## Test Analytics
+
+<p align="center">
+<img src="screenshots/charts.png" width="100%">
+</p>
+
+---
+
+## Execution History
+
+<p align="center">
+<img src="screenshots/history.png" width="100%">
+</p>
 
 ---
 
