@@ -1,3 +1,13 @@
+
+![Java](https://img.shields.io/badge/Java-17-orange)
+
+![Spring Boot](https://img.shields.io/badge/SpringBoot-3.x-brightgreen)
+
+![MySQL](https://img.shields.io/badge/MySQL-8-blue)
+
+![License](https://img.shields.io/badge/License-MIT-green)
+
+
 # 🚀 Test Intelligence Platform
 
 A full-stack Test Intelligence Dashboard built using **Spring Boot, Java, REST APIs, MySQL, HTML, CSS, JavaScript, and Chart.js** to visualize test execution analytics in real time.
