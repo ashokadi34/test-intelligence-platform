@@ -189,7 +189,7 @@ Create MySQL database
 test_intelligence_platform
 ```
 
-Update
+Update and setup in your local
 
 ```
 application.properties
@@ -211,7 +211,7 @@ spring.datasource.password=yourpassword
 mvn spring-boot:run
 ```
 
-Application runs at
+Application runs at your local
 
 ```
 http://localhost:8080
